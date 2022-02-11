@@ -7,6 +7,7 @@ async function main() {
     try {
         const credentials = process.env.MONGODB_URL;
         await mongoose.connect(credentials);
+
         console.log("Connected to database... I think?");
         console.log("State of connection (0: disc, 1: connected, 2: connecting, 3: disconnecting): "+mongoose.connection.readyState);
     }

@@ -5,7 +5,7 @@ const Dream = new Schema({
     date: Date,
     userId: Number,
     foodAndDrinks: {
-        food: {
+        drink: {
             water: String,
             sugaryDrink: String,
             energyDrink: String,
@@ -32,7 +32,7 @@ const Dream = new Schema({
         }
     },
     timeManagement: {
-        type: {
+        tools: {
             scheduleBook: Boolean,
             app: Boolean,
             notes: Boolean,

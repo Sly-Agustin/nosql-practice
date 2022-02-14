@@ -6,11 +6,11 @@ const Dream = new Schema({
     userId: {type: Number, required: [true, "userId was not provided"]},
     foodAndDrinks: {
         drink: {
-            water: {type: String, required: [true, "Water field required"]},
-            sugaryDrink: {type: String, required: [true, "sugaryDrink field required"]},
-            energyDrink: {type: String, required: [true, "energyDrink field required"]},
-            caffeineDrink: {type: String, required: [true, "caffeineDrink field required"]},
-            alcohol: {type: String, required: [true, "alcohol field required"]}
+            water: {type: String, required: [true, "Water field required"], enum: {values: ['no', 'few', 'many', 'lot']}},
+            sugaryDrink: {type: String, required: [true, "sugaryDrink field required"], enum: {values: ['no', 'few', 'many', 'lot']}},
+            energyDrink: {type: String, required: [true, "energyDrink field required"], enum: {values: ['no', 'few', 'many', 'lot']}},
+            caffeineDrink: {type: String, required: [true, "caffeineDrink field required"], enum: {values: ['no', 'few', 'many', 'lot']}},
+            alcohol: {type: String, required: [true, "alcohol field required"], enum: {values: ['no', 'few', 'many', 'lot']}}
         }
     },
     screenUse: {

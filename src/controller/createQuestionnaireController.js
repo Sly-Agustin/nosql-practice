@@ -1,20 +1,6 @@
 import Dream from '../models/dream';
 const mongoose = require('mongoose');
 
-/*function checkError(error){
-  if(error!=undefined) {
-    let errorsMessage = {}
-    let keys = Object.keys(error.errors);
-    for(let i = 0; i<keys.length; i++) {
-      let specificErrorName=keys[i];
-      let specificError = error.errors[specificErrorName];
-      let messageError = specificError.message
-      errorsMessage[keys[i]]=messageError;
-    }
-  }
-  return "noerrors";
-}*/
-
 export const createQuestionnaireController = async (req, res) => {
     try {
       const { body } = req;

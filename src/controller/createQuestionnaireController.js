@@ -1,55 +1,19 @@
 import Dream from '../models/dream';
 const mongoose = require('mongoose');
 
-function createSchema(body) {
-  const newDream = new Dream({
-    date: body.date,
-    userId: body.userId,
-    foodAndDrinks: {
-      drink: {
-        water: body.foodAndDrinks.drink.water,
-        sugaryDrink: body.foodAndDrinks.drink.sugaryDrink,
-        energyDrink: body.foodAndDrinks.drink.energyDrink,
-        caffeineDrink: body.foodAndDrinks.drink.caffeineDrink,
-        alcohol: body.foodAndDrinks.drink.alcohol
-      }
-    },
-    screenUse: {
-      beforeSleep: {
-        mobilePhone: body.screenUse.beforeSleep.mobilePhone,
-        television: body.screenUse.beforeSleep.television,
-        tablet: body.screenUse.beforeSleep.tablet,
-        computer: body.screenUse.beforeSleep.computer
-      },
-      throughDay: {
-        socialMedia: body.screenUse.throughDay.socialMedia,
-        videogames: body.screenUse.throughDay.videogames
-      }
-    },
-    physicalActivity: {
-      training: {
-        timeHours: body.physicalActivity.training.timeHours,
-        timeMinutes: body.physicalActivity.training.timeMinutes
-      }
-    },
-    timeManagement: {
-      tools: {
-        scheduleBook: body.timeManagement.tools.scheduleBook,
-        app: body.timeManagement.tools.app,
-        notes: body.timeManagement.tools.notes,
-        cellphone: body.timeManagement.tools.cellphone
-      }
-    },
-    sleepManagement: {
-      quality: body.sleepManagement.quality,
-      sleep: {
-        sleepTime: body.sleepManagement.sleep.sleepTime,
-        wakeTime: body.sleepManagement.sleep.wakeTime
-      }
+/*function checkError(error){
+  if(error!=undefined) {
+    let errorsMessage = {}
+    let keys = Object.keys(error.errors);
+    for(let i = 0; i<keys.length; i++) {
+      let specificErrorName=keys[i];
+      let specificError = error.errors[specificErrorName];
+      let messageError = specificError.message
+      errorsMessage[keys[i]]=messageError;
     }
-  });
-  return newDream;
-}
+  }
+  return "noerrors";
+}*/
 
 export const createQuestionnaireController = async (req, res) => {
     try {
@@ -57,9 +21,23 @@ export const createQuestionnaireController = async (req, res) => {
       const credentials = process.env.MONGODB_URL;
       await mongoose.connect(credentials);
 
-      const newDream = createSchema(body);
-      await newDream.save();
-      res.status(200).json({ message: "Data received and stored succesfully" });
+      const newDream = new Dream(body);
+      let error = newDream.validateSync();
+      if(error!=undefined) {
+        let errorsMessage = {}
+        let keys = Object.keys(error.errors);
+        for(let i = 0; i<keys.length; i++) {
+          let specificErrorName=keys[i];
+          let specificError = error.errors[specificErrorName];
+          let messageError = specificError.message
+          errorsMessage[keys[i]]=messageError;
+        }
+        res.status(400).json({ errores: errorsMessage});
+      }
+      else{
+        await newDream.save();
+        res.status(200).json({ message: "Data received and stored succesfully" });
+      }
     } catch (err) {
       res.status(500).json({ 
         message: 'Internal server error', 

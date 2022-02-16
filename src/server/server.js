@@ -1,6 +1,5 @@
 const express = require('express');
 require('dotenv').config();
-//import express from 'express';
 import dreamRouter from './routes/dream.route';
 import studentRouter from './routes/student.route'
 

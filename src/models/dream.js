@@ -12,6 +12,10 @@ const Dream = new Schema({
             message   : '{VALUE} is not an integer value'
         }
     },
+    questionnaireId: {
+        type: Number,
+        unique: true
+    },
     foodAndDrinks: {
         drink: {
             water: {

@@ -1,4 +1,4 @@
-import Dream from '../models/dream';
+import Questionnaire from '../models/dream';
 const mongoose = require('mongoose');
 
 export const createQuestionnaireController = async (req, res) => {
@@ -7,8 +7,8 @@ export const createQuestionnaireController = async (req, res) => {
       const credentials = process.env.MONGODB_URL;
       await mongoose.connect(credentials);
 
-      const newDream = new Dream(body);
-      let error = newDream.validateSync();
+      const newQuestionnaire = new Questionnaire(body);
+      let error = newQuestionnaire.validateSync();
       if(error!=undefined) {
         let errorsMessage = {}
         let keys = Object.keys(error.errors);
@@ -21,7 +21,7 @@ export const createQuestionnaireController = async (req, res) => {
         res.status(400).json({ errores: errorsMessage});
       }
       else{
-        await newDream.save();
+        await newQuestionnaire.save();
         res.status(200).json({ message: "Data received and stored succesfully" });
       }
     } catch (err) {

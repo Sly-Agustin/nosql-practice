@@ -1,13 +1,13 @@
 const express = require('express');
 require('dotenv').config();
-import dreamRouter from './routes/dream.route';
+import questionnaireRouter from './routes/questionnaire.route';
 import studentRouter from './routes/student.route'
 
 const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
-app.use('/dreams', dreamRouter);
+app.use('/questionnaires', questionnaireRouter);
 app.use('/students', studentRouter)
 
 export const start = () => {

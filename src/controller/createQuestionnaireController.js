@@ -26,8 +26,6 @@ const createQuestionnaire = async (questionnaireModel, questionnaireData) => {
 const createQuestionnaireController = async (req, res) => {
     try {
       const { body } = req;
-      const credentials = process.env.MONGODB_URL;
-      await mongoose.connect(credentials);
 
       const newQuestionnaire = await createQuestionnaire(Questionnaire, body);
       if(newQuestionnaire.errors){

@@ -91,12 +91,12 @@ const Dream = new Schema({
             sleepTime: {
                 type: String, 
                 required: [true, "sleepTime required"],
-                match: [/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/, 'sleepTime not valid']
+                match: [/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/, 'sleepTime not valid, must be between 00:00 - 23:59']
             },
             wakeTime: {
                 type: String, 
                 required: [true, "wakeTime required"],
-                match: [/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/, 'sleepTime not valid']
+                match: [/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/, 'sleepTime not valid, must be between 00:00 - 23:59']
             }
         }
     }

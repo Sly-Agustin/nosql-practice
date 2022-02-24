@@ -18,7 +18,7 @@ function idVerification(possibleId) {
 }
 
 async function findQuestionnaireIfExists(questionnaireModel, id){
-    return await questionnaireModel.findOne({ questionnaireId: id }).exec();
+    return await questionnaireModel.findOne({ questionnaireId: id });
 }
 
 async function getDreamControllerById (req, res) {

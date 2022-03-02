@@ -1,5 +1,4 @@
 const {createQuestionnaire} = require('../controller/createQuestionnaireController');
-import Questionnaire from '../models/dream';
 
 describe('Creation of a new questionnaire', () => {
   test('Trying to create a questionnaire with invalid data, should return errors', async () => {
@@ -15,24 +14,21 @@ describe('Creation of a new questionnaire', () => {
           "alcohol": "no"
         }
       },
-    }
-    expect(await createQuestionnaire(Questionnaire, invalidObject)).toEqual({
+    };
+    const InvalidQuestionnaire = class{
+      validateSync(){
+        return {
+          errors: {
+            mockedError: {
+              message: "bad request"
+            }
+          }
+        };
+      }
+    };
+    expect(await createQuestionnaire(InvalidQuestionnaire, invalidObject)).toEqual({
       errors: {
-          "sleepManagement.sleep.wakeTime": "wakeTime required",
-          "sleepManagement.sleep.sleepTime": "sleepTime required",
-          "sleepManagement.quality": "quality required",
-          "timeManagement.tools.cellphone": "cellphone required",
-          "timeManagement.tools.notes": "notes required",
-          "timeManagement.tools.app": "app required",
-          "timeManagement.tools.scheduleBook": "scheduleBook required",
-          "physicalActivity.training.timeMinutes": "timeMinutes required",
-          "physicalActivity.training.timeHours": "timeHours required",
-          "screenUse.throughDay.videogames": "videogames info required",
-          "screenUse.throughDay.socialMedia": "socialMedia info required",
-          "screenUse.beforeSleep.computer": "computer info required",
-          "screenUse.beforeSleep.tablet": "tablet info required",
-          "screenUse.beforeSleep.television": "television info required",
-          "screenUse.beforeSleep.mobilePhone": "mobilePohne info required"
+        "mockedError": "bad request"
       }
     });
   });

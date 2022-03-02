@@ -1,16 +1,18 @@
 import Questionnaire from '../models/dream';
 const mongoose = require('mongoose');
 
-function isNumber(posibleId){
-	let id = parseInt(posibleId, 10);
-	if (isNaN(id)) {
+function isNumber(possibleId){
+	if (possibleId==" "){
+        return false;
+    }
+	if (isNaN(possibleId)) {
 		return false;
 	}
 	return true;
 }
 
 function idVerification(possibleId) {
-    const id = parseInt(possibleId, 10);
+    const id = possibleId;
     if (!isNumber(id)){
         return null;
     }

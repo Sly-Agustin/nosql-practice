@@ -1,5 +1,6 @@
 import Student from '../../models/student';
 const mongoose = require('mongoose');
+import logger from '../../utils/logger'
 
 const createStudent = async (studentModel, studentData) => {
     const student = new studentModel(studentData);
@@ -17,10 +18,12 @@ export const createStudentController = async (req, res) => {
 
         const newStundent = await createStudent(Student, body)
         if(newStundent.error){
+            logger.info('Student not created due to incorrect data received');
             res.status(400).json(newStundent);
         }
         else {
             await newStundent.save();
+            logger.info('Student created');
             res.status(200).json({ message: "Student created succesfully" });
         }
     }

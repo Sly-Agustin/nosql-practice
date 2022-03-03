@@ -1,5 +1,6 @@
 import Questionnaire from '../models/dream';
 const mongoose = require('mongoose');
+import logger from '../utils/logger'
 
 function getErrorsFromValidation(error) {
   let errorsMessage = {}
@@ -29,10 +30,12 @@ const createQuestionnaireController = async (req, res) => {
 
       const newQuestionnaire = await createQuestionnaire(Questionnaire, body);
       if(newQuestionnaire.errors){
+        logger.info('Questionnaire not created due to incorrect data')
         res.status(400).json(newQuestionnaire);
       }
       else {
         await newQuestionnaire.save();
+        logger.info('Questionnaire created')
         res.status(200).json({ message: "Data received and stored succesfully" });
       }
     } catch (err) {

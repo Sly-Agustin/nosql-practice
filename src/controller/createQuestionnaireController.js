@@ -3,24 +3,22 @@ const mongoose = require('mongoose');
 
 function getErrorsFromValidation(error) {
   let errorsMessage = {}
-  let keys = Object.keys(error.errors);
-  for(let i = 0; i<keys.length; i++) {
-    let specificErrorName=keys[i];
+
+  Object.keys(error.errors).map((key) => {  
+    let specificErrorName=key;
     let specificError = error.errors[specificErrorName];
     let messageError = specificError.message
-    errorsMessage[keys[i]]=messageError;
-  }
+    errorsMessage[specificErrorName]=messageError;
+
+    return;
+  })
   return {errors: errorsMessage}
 }
 
 const createQuestionnaire = async (questionnaireModel, questionnaireData) => {
   const questionnaire = new questionnaireModel(questionnaireData);
   let error = questionnaire.validateSync();
-  if(error!=undefined) {
-    let errorsMessage = getErrorsFromValidation(error);
-    return errorsMessage;
-  }
-  return questionnaire;
+  return error ? (getErrorsFromValidation(error)) : questionnaire;
 }
 
 const createQuestionnaireController = async (req, res) => {

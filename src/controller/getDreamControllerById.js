@@ -18,7 +18,8 @@ async function getDreamControllerById (req, res) {
         const id = idVerification(req.params.id);
         if (id==null){
             res.status(400).send({
-                message: 'ID must be a number'
+                message: 'ID not valid',
+                idProvided: req.params.id
             })
             return
         }

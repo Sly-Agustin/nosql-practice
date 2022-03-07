@@ -1,6 +1,6 @@
 import Questionnaire from '../models/dream';
 const mongoose = require('mongoose');
-import logger from '../utils/logger'
+import logger from '../utils/questionnaireLogger'
 
 function isNumber(possibleId){
 	if (possibleId==" "){

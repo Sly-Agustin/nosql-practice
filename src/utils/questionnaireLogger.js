@@ -7,7 +7,7 @@ module.exports = createLogger({
         new transports.File({
             maxsize: 5120000,   // Max size in bytes
             maxFiles: 5,        // If a 6th file log will be created, it will delete the oldest, preserving a max of 5 files
-            filename: `${__dirname}/../../logs/log-test.log`
+            filename: `${__dirname}/../../logs/questionnaire-logs.log`
         }),
         new transports.Console({
             level: 'debug'

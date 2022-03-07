@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 import questionnaireRouter from './routes/questionnaire.route';
 import studentRouter from './routes/student.route'
-import logger from '../utils/logger'
+import logger from '../utils/generalLogger'
 
 const app = express();
 const port = process.env.PORT;

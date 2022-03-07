@@ -42,7 +42,7 @@
 					}
 				},
 				"url": {
-					"raw": "127.0.0.1:3000/questionnaires/create",
+					"raw": "127.0.0.1:3000/questionnaires/",
 					"host": [
 						"127",
 						"0",
@@ -52,7 +52,7 @@
 					"port": "3000",
 					"path": [
 						"questionnaires",
-						"create"
+						""
 					]
 				}
 			},
@@ -73,7 +73,7 @@
 					}
 				},
 				"url": {
-					"raw": "127.0.0.1:3000/students/createStudent",
+					"raw": "127.0.0.1:3000/students/",
 					"host": [
 						"127",
 						"0",
@@ -83,7 +83,7 @@
 					"port": "3000",
 					"path": [
 						"students",
-						"createStudent"
+						""
 					]
 				}
 			},
@@ -148,7 +148,7 @@
 					}
 				},
 				"url": {
-					"raw": "127.0.0.1:3000/questionnaires/create",
+					"raw": "127.0.0.1:3000/questionnaires/",
 					"host": [
 						"127",
 						"0",
@@ -158,7 +158,7 @@
 					"port": "3000",
 					"path": [
 						"questionnaires",
-						"create"
+						""
 					]
 				}
 			},

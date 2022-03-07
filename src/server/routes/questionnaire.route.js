@@ -4,7 +4,7 @@ import { getHealthController } from '../../controller/healthController';
 import { getDreamControllerById } from '../../controller/getDreamControllerById';
 const router = express.Router();
 
-router.post('/create',  createQuestionnaireController);
+router.post('/',  createQuestionnaireController);
 router.get('/health', getHealthController);
 router.get('/:id', getDreamControllerById);
 

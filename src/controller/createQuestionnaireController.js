@@ -30,7 +30,8 @@ const createQuestionnaireController = async (req, res) => {
 
       const newQuestionnaire = await createQuestionnaire(Questionnaire, body);
       if(newQuestionnaire.errors){
-        logger.info('Questionnaire not created due to incorrect data')
+        logger.info('Questionnaire not created due to incorrect data.');
+        logger.debug('Questionnaire not created due to invalid or incomplete data', {errors: newQuestionnaire.errors, data: body});
         res.status(400).json(newQuestionnaire);
       }
       else {

@@ -16,13 +16,13 @@ export const createStudentController = async (req, res) => {
     try {
         const { body } = req;
 
-        const newStundent = await createStudent(Student, body)
-        if(newStundent.error){
-            studentLogger.info('Student not created due to incorrect data received');
-            res.status(400).json(newStundent);
+        const newStudent = await createStudent(Student, body)
+        if(newStudent.error){
+            studentLogger.info('Student not created due to incorrect data received. Error: '+newStudent.error);
+            res.status(400).json(newStudent);
         }
         else {
-            await newStundent.save();
+            await newStudent.save();
             studentLogger.info('Student created');
             res.status(200).json({ message: "Student created succesfully" });
         }

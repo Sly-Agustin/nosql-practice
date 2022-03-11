@@ -26,6 +26,7 @@ const createQuestionnaire = async (questionnaireModel, questionnaireData) => {
 
 const createQuestionnaireController = async (req, res) => {
     try {
+      let startTime = process.hrtime.bigint();
       const { body } = req;
 
       const newQuestionnaire = await createQuestionnaire(Questionnaire, body);
@@ -36,12 +37,14 @@ const createQuestionnaireController = async (req, res) => {
       }
       else {
         await newQuestionnaire.save();
-        logger.info('Questionnaire created')
+        let endTime = process.hrtime.bigint();
+        logger.info('Questionnaire '+newQuestionnaire._id+' created in '+(endTime-startTime)+' nanoseconds', {processTime: (endTime-startTime)})
         res.status(200).json({ message: "Data received and stored succesfully" });
       }
     } catch (err) {
       res.status(500).json({ 
         message: 'Internal server error', 
+        error: err
       });
     }
   };

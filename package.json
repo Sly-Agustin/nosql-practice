@@ -4,9 +4,10 @@
   "description": "Repo for learning and test things with NoSQL",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dbConnection": "node src/dbConnection.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/index.js",
+    "dbConnection": "node dist/dbConnection.js",
+    "test": "jest",
+    "build": "babel src --out-dir dist"
   },
   "repository": {
     "type": "git",
@@ -19,10 +20,23 @@
   },
   "homepage": "https://github.com/Sly-Agustin/nosql-practice#readme",
   "dependencies": {
+    "babel-install": "^2.1.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "express-validator": "^6.14.0",
     "http": "0.0.1-security",
     "mongoose": "^6.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.7",
+    "@babel/core": "^7.17.2",
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "babel-eslint": "^8.2.1",
+    "babel-register": "^6.26.0",
+    "jest": "^27.5.1"
   }
 }

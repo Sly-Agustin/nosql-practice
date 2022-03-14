@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 import questionnaireRouter from './routes/questionnaire.route';
 import studentRouter from './routes/student.route'
+import logger from '../utils/generalLogger'
 
 const app = express();
 const port = process.env.PORT;
@@ -14,7 +15,7 @@ app.use('/students', studentRouter)
 export const start = async () => {
     await mongoose.connect(process.env.MONGODB_URL);
     app.listen(port, () => {
-        console.log(`Now listening on port ${port}`);
+        logger.info(`Server started on port ${port}`);
     });
   };
 

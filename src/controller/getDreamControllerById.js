@@ -11,7 +11,7 @@ function idVerification(possibleId) {
 }
 
 async function findQuestionnaireIfExists(questionnaireModel, id){
-    return await questionnaireModel.findOne({ questionnaireId: id });
+    return await questionnaireModel.findOne({ _id: id });
 }
 
 async function getDreamControllerById (req, res) {
@@ -19,7 +19,7 @@ async function getDreamControllerById (req, res) {
     try{
         const id = idVerification(req.params.id);
         if (id==null){
-            logger.error('getDreamControllerById error: ID not a number. Received: '+req.params.id)
+            logger.error('getDreamControllerById error: ID not valid. Received: '+req.params.id)
             res.status(400).send({
                 message: 'ID not valid',
                 idProvided: req.params.id

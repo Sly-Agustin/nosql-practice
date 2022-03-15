@@ -16,19 +16,20 @@ function authenticateToken(req, res, next){
       return res.status(403).json({ message: 'invalid token'});
     }
     req.user=user;
+    console.log("user decrypted: "+JSON.stringify(user));
     next();
   });
 }
 
 function generateAccessToken(user) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s'});
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5h'});
 }
 
 async function loginController(req, res){
   // Authenticate user
 
   const username = req.body.username;
-  const user = {name: username}
+  const user = {userId: username}
 
   const accessToken = generateAccessToken(user);
   const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
@@ -51,7 +52,7 @@ function tokenController(req, res) {
     if (err) {
       return res.status(403).json({ message: 'invalid token'});
     }
-    const accessToken = generateAccessToken({name: user.name});   // We dont use the whole user because it has irrelevant info
+    const accessToken = generateAccessToken({userId: user.userId});   // We dont use the whole user because it has irrelevant info
     res.status(200).json({newToken: accessToken})
   });
 }

@@ -4,12 +4,11 @@ const Schema = mongoose.Schema;
 const Dream = new Schema({
     date: {type: Date, required: [true, "date was not provided"]},
     userId: {
-        type: Number,
-        min: [0, 'Minimun User ID is 0'], 
+        type: Schema.Types.ObjectId,
         required: [true, "userId was not provided"],
         validate : {
-            validator : Number.isInteger,
-            message   : '{VALUE} is not an integer value'
+            validator : mongoose.isValidObjectId,
+            message   : '{VALUE} is not a valid ObjectID'
         }
     },
     foodAndDrinks: {

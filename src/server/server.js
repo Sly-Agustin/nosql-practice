@@ -5,6 +5,7 @@ import questionnaireRouter from './routes/questionnaire.route';
 import studentRouter from './routes/student.route'
 import loginRouter from './routes/login.route'
 import logger from '../utils/generalLogger'
+import authRouter from './routes/auth.route';
 
 import Student from '../models/student';
 
@@ -17,35 +18,26 @@ const passport = require('passport');
 app.use(express.json());
 app.use('/questionnaires', questionnaireRouter);
 app.use('/students', studentRouter);
-app.use('/login', loginRouter)
+app.use('/login', loginRouter);
+app.use('/auth', authRouter);
 app.get('/', function(req, res) {   // Nuevo
     res.render('pages/auth');
 });
+app.get('/error', (req, res) => res.send("error logging in"));
 
 app.use(session({
     resave: false,
     saveUninitialized: true,
     secret: 'SECRET' 
   }));
-  
 app.use(passport.initialize());
 app.use(passport.session());
   
 app.set('view engine', 'ejs');
-
-// These 2 are after error or success
-app.get('/success', (req, res) => {
-  console.log("Entering success, req.session: "+JSON.stringify(req.session));
-  //console.log("req.body content: "+JSON.stringify(req.body))
-  let userInfo = req.session.passport.user
-  res.status(200).json(userInfo)}
-);
-app.get('/error', (req, res) => res.send("error logging in"));
   
 passport.serializeUser(function(user, cb) {
   cb(null, user);
 });
-  
 passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
@@ -60,7 +52,6 @@ passport.use(new GoogleStrategy(
     callbackURL: "http://localhost:3000/auth/google/callback"
   },
   async function(accessToken, refreshToken, profile, cb) {
-    // New
     let googleMail = profile.emails[0].value;
     let googleName = profile.name.givenName+" "+profile.name.familyName;
     let student = await Student.findOne({ name: googleName });
@@ -74,29 +65,8 @@ passport.use(new GoogleStrategy(
       status: 'verified'
     };
     return cb(null, userInfo)
-
-    //return done(null, false); // Always fail auth
   }
 ));
- 
-app.get('/auth/google', 
-  passport.authenticate('google', { scope : ['profile', 'email'] }));
- 
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/error' }),
-  function(req, res) {
-    console.log("Entering function after authenticate, in callback");
-    console.log("req.session in callback: "+JSON.stringify(req.session));
-    // Successful authentication, redirect success.
-    req.body.wololo = 'wololo';
-    if (req.body.wololo){
-      console.log("THERE IS WOLOLO! "+JSON.stringify(req.body));
-    }
-    res.redirect('/success');
-    //res.status(200).json('Exito en login '+JSON.stringify(req.body));
-  });
-
-
 
 export const start = async () => {
     await mongoose.connect(process.env.MONGODB_URL);
@@ -104,4 +74,3 @@ export const start = async () => {
         logger.info(`Server started on port ${port}`);
     });
   };
-

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+import Student from '../../models/student';
 
 let refreshTokenArr = [];
 
@@ -26,7 +27,7 @@ function generateAccessToken(user) {
 }
 
 async function loginController(req, res){
-  // Authenticate user
+  // Assumes the user has been authenticated by google/facebook/etc
 
   const userId = req.body.userId;
   const user = {userId: userId}
@@ -34,18 +35,17 @@ async function loginController(req, res){
   const accessToken = generateAccessToken(user);
   const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
   refreshTokenArr.push(refreshToken);   // This should be done with database, doing it locally to test
-  console.log('Array of refresh tokens: '+refreshTokenArr);
 
   res.status(200).json({ message: 'logged succesfully', accessToken: accessToken, refreshToken: refreshToken });
 };
 
-function tokenController(req, res) {
+function refreshTokenController(req, res) {
   const refreshToken = req.body.token;
   if(refreshToken==null) {
     return res.status(401).json({ message: "no token provided to refresh" });
   }
   if(!refreshTokenArr.includes(refreshToken)) {
-    return res.status(403).json({ message: "no refresh tokens exists within the database" });
+    return res.status(403).json({ message: "no refresh tokens like the one received exists within the database" });
   }
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
@@ -62,4 +62,18 @@ function deleteRefreshToken(req, res) {
   res.status(200).json({ message: "Token deleted succesofully" });
 }
 
-export {loginController, authenticateToken, tokenController, deleteRefreshToken}
+async function getIdBasedOnName(req, res, next){
+  console.log("getIdBasedOnName req.body: "+JSON.stringify(req.body));
+  let userName=req.body.name;
+  let user = await Student.findOne({name: userName});
+  let userId;
+  if(user==null){
+    console.log("returning student does no exist");
+    return res.status(404).json({error: 'Student with that name does not exist'});
+  }
+  userId = user._id;
+  req.body.userId=userId;
+  next();
+}
+
+export {loginController, authenticateToken, refreshTokenController, deleteRefreshToken, getIdBasedOnName}

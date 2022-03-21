@@ -28,8 +28,8 @@ function generateAccessToken(user) {
 async function loginController(req, res){
   // Authenticate user
 
-  const username = req.body.username;
-  const user = {userId: username}
+  const userId = req.body.userId;
+  const user = {userId: userId}
 
   const accessToken = generateAccessToken(user);
   const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);

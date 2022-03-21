@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 import Student from '../../models/student';
+import logger from '../../utils/authLogger'
 
 let refreshTokenArr = [];
 
@@ -17,7 +18,6 @@ function authenticateToken(req, res, next){
       return res.status(403).json({ message: 'invalid token'});
     }
     req.user=user;
-    console.log("user decrypted: "+JSON.stringify(user));
     next();
   });
 }
@@ -63,12 +63,12 @@ function deleteRefreshToken(req, res) {
 }
 
 async function getIdBasedOnName(req, res, next){
-  console.log("getIdBasedOnName req.body: "+JSON.stringify(req.body));
+  logger.info("getIdBasedOnName req.body: "+JSON.stringify(req.body));
   let userName=req.body.name;
   let user = await Student.findOne({name: userName});
   let userId;
   if(user==null){
-    console.log("returning student does no exist");
+    logger.log("Studen with name: "+userName+" does not exist in the database");
     return res.status(404).json({error: 'Student with that name does not exist'});
   }
   userId = user._id;

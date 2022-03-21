@@ -1,5 +1,5 @@
 import express from 'express';
-import { googleAuthServiceCallback, test } from '../../controller/auth/googleAuthController'
+import { googleAuthServiceCallback } from '../../controller/auth/googleAuthController'
 import { loginController, getIdBasedOnName } from '../../controller/login/loginController';
 const passport = require('passport');
 const router = express.Router();

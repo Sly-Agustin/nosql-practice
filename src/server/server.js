@@ -68,6 +68,28 @@ passport.use(new GoogleStrategy(
   }
 ));
 
+/*const FacebookStrategy = require('passport-facebook');
+passport.use(new FacebookStrategy({
+  clientID: process.env['FACEBOOK_APP_ID'],
+  clientSecret: process.env['FACEBOOK_APP_SECRET'],
+  callbackURL: 'https://www.example.com/oauth2/redirect/facebook'
+},
+async function(accessToken, refreshToken, profile, cb) {
+  let facebookMail = profile.emails[0].value;
+  let facebookName = profile.name.givenName+" "+profile.name.familyName;
+  let student = await Student.findOne({ name: facebookName });
+  if(!student){
+    return cb(null, false)
+  }
+  let userInfo = {
+    id: profile.id,
+    mail: facebookMail,
+    name: facebookName,
+    status: 'verified'
+  };
+  return cb(null, userInfo)
+}))*/
+
 export const start = async () => {
     await mongoose.connect(process.env.MONGODB_URL);
     app.listen(port, () => {
